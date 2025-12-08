@@ -1,10 +1,11 @@
-name: My first workflow 
+name: "My first workflow"
 
-on: push 
+on:
+  push:
 
 jobs: 
     first_job: 
-        runs_on: ubuntu-latest
+        runs-on: ubuntu-latest
         steps:
         - name: using the echo command 
           run: echo "This is first job"
