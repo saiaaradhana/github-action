@@ -3,11 +3,14 @@ name: "My first workflow"
 on:
   push:
 
-jobs: 
+env: 
+   environment: dev
+
+jobs:
     first_job: 
         env:
             application: java
-            environment: dev
+            
         runs-on: ubuntu-latest
         steps:
         - name: using the echo command 
