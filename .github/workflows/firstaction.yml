@@ -5,10 +5,15 @@ on:
 
 jobs: 
     first_job: 
+        env:
+            application: java
+            environment: dev
         runs-on: ubuntu-latest
         steps:
         - name: using the echo command 
-          run: echo "This is first job"
+          run: |
+            echo "This is first job"
+            echo ${{env.application}}
 
         - name: list the dir
           run: ls -la
@@ -39,6 +44,7 @@ jobs:
             echo "This is second job"
             ls -ltra 
             cat README.md
+            echo ${{env.environment}}
     third_job:
         needs: second_job
         runs-on: ubuntu-latest
