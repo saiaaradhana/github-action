@@ -1,67 +1,68 @@
 name: "My first workflow"
 
-on: 
+on:
   workflow_dispatch:
-  
 
-env: 
-   environment: dev
+env:
+  environment: dev
 
 jobs:
-    first_job: 
-        env:
-            application: java
-            
-        runs-on: ubuntu-latest
-        steps:
-        - name: using the echo command 
-          run: |
-            echo "This is first job"
-            echo ${{env.application}}
+  first_job:
+    env:
+      application: java
+    runs-on: ubuntu-latest
 
-        - name: list the dir
-          run: ls -la
+    steps:
+      - name: using the echo command
+        run: |
+          echo "This is first job"
+          echo "${{ env.application }}"
 
-        - name: using the github action
-          uses: actions/checkout@v6  
+      - name: list the dir
+        run: ls -la
 
-        - name: read the file 
-          run: cat README.md
+      - name: using the github action
+        uses: actions/checkout@v6  
 
-        - name: upload the artifacts 
-          uses: actions/upload-artifact@v4
-          with:
-            name: myartifact
-            path: ./README.md 
+      - name: read the file
+        run: cat README.md
 
-    second_job:
-        needs: first_job
-        runs-on: ubuntu-latest
-        steps:
-        - name: Download the artifacts 
-          uses: actions/download-artifact@v5
-          with:
-            name: myartifact
+      - name: upload the artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: myartifact
+          path: README.md
 
-        - name: uisng the multiline command
-          run: |
-            echo "This is second job"
-            ls -ltra 
-            cat README.md
-            echo ${{env.environment}}
-    third_job:
-        needs: second_job
-        runs-on: ubuntu-latest
-        steps: 
-        - name: using the github action
-          uses: actions/checkout@v6 
+  
+  second_job:
+    needs: first_job
+    runs-on: ubuntu-latest
 
-        - name: change the permission
-          run: chmod 777 sample.sh
+    steps:
+      - name: Download the artifacts
+        uses: actions/download-artifact@v5
+        with:
+          name: myartifact
 
-        - name: running the shell script 
-          run: ./sample.sh  
-                      
-                  
+      - name: using the multiline command
+        run: |
+          echo "This is second job"
+          ls -ltra 
+          cat README.md
+          echo "${{ env.environment }}"
 
+  
+  third_job:
+    needs: second_job
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: using the github action
+        uses: actions/checkout@v6
+
+      - name: change the permission
+        run: chmod 777 sample.sh
+
+      - name: running the shell script
+        run: ./sample.sh
 
