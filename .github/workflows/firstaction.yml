@@ -24,12 +24,20 @@ jobs:
         steps:
         - name: using the github action
           uses: actions/checkout@v6
-              
+
         - name: uisng the multiline command
           run: |
             echo "This is second job"
             ls -ltra 
             cat README.md
+    third_job:
+        runs-on: ubuntu-latest
+        steps: 
+        - name: checkout stage 
+          uses: actions/checkout@v6
+        - name: running the shell script 
+          run: ./sample.sh  
+                      
                   
 
 
