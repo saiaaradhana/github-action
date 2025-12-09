@@ -3,6 +3,9 @@ name: "My first workflow"
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 env:
   environment: dev
 
@@ -13,6 +16,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: checkout repository
+        uses: actions/checkout@v6
+
       - name: using the echo command
         run: |
           echo "This is first job"
@@ -20,9 +26,6 @@ jobs:
 
       - name: list the dir
         run: ls -la
-
-      - name: using the github action
-        uses: actions/checkout@v6  
 
       - name: read the file
         run: cat README.md
@@ -33,7 +36,6 @@ jobs:
           name: myartifact
           path: README.md
 
-  
   second_job:
     needs: first_job
     runs-on: ubuntu-latest
@@ -47,17 +49,16 @@ jobs:
       - name: using the multiline command
         run: |
           echo "This is second job"
-          ls -ltra 
+          ls -ltra
           cat README.md
           echo "${{ env.environment }}"
 
-  
   third_job:
     needs: second_job
     runs-on: ubuntu-latest
 
     steps:
-      - name: using the github action
+      - name: checkout repository
         uses: actions/checkout@v6
 
       - name: change the permission
