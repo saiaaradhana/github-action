@@ -13,6 +13,9 @@ jobs:
         - name: list the dir
           run: ls -la
 
+        - name: using the github action
+          uses: actions/checkout@v6  
+
         - name: read the file 
           run: cat README.md
 
